@@ -125,6 +125,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'auth.User'
 
-LOGIN_URL = '/login/'  # or your login route
+LOGIN_URL = '/user/login/'
+LOGIN_REDIRECT_URL = '/show_notes/'  # optional: where to go after login
 
 
