@@ -1,0 +1,63 @@
+{% extends 'note/base.html' %}
+{% block title %} Delete Note | Notes{% endblock %}
+{% block content %}
+<style>
+    .delete-container {
+        max-width: 500px;
+        margin: 150px auto 50px; /* top margin for navbar */
+        padding: 30px 20px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        text-align: center;
+        font-family: Arial, sans-serif;
+    }
+
+    .delete-container p {
+        font-size: 1.2rem;
+        color: #ff4d4f;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .delete-container button {
+        padding: 12px 25px;
+        background-color: #ff4d4f;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .delete-container button:hover {
+        background-color: #cc3a3f;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 480px) {
+        .delete-container {
+            padding: 20px 15px;
+        }
+
+        .delete-container p {
+            font-size: 1.1rem;
+        }
+
+        .delete-container button {
+            padding: 10px 20px;
+            font-size: 0.95rem;
+        }
+    }
+</style>
+
+<div class="delete-container">
+    <p>Are you sure you want to delete "{{ note }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm delete</button>
+    </form>
+</div>
+{% endblock content %}

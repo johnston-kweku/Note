@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Notes{% endblock%}</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navbar container */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #007BFF; /* Blue navbar */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            z-index: 1000;
+        }
+
+        /* Hello message on the left */
+        .navbar .hello {
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Navbar links container */
+        .navbar .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Buttons / links style */
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: white;
+            background-color: #0056b3;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar .nav-links a:hover {
+            background-color: #003f7f;
+        }
+
+        /* Hamburger menu button */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .navbar .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #007BFF;
+                padding: 10px;
+                border-radius: 10px;
+            }
+
+            .navbar .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        /* Add spacing for content to avoid overlapping navbar */
+        .content-wrapper {
+            padding-top: 70px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        {% if user.is_authenticated %}
+            <p class="hello">Hello {{ user.username }}</p>
+        {% else %}
+            <p class="hello">Welcome!</p>
+        {% endif %}
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="nav-links" id="navLinks">
+            {% if request.resolver_match.url_name != 'index' %}
+                <a href="{% url 'note:index' %}">Home</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <a href="{% url 'user:logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'user:sign_up' %}">Sign up</a>
+                <a href="{% url 'user:login' %}">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

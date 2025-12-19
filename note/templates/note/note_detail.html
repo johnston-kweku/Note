@@ -1,0 +1,101 @@
+{% extends 'note/base.html' %}
+{% block title %} {{note.title}} | Notes{% endblock %}
+
+{% block content %}
+<style>
+    .note-detail-container {
+        max-width: 700px;
+        margin: 100px auto 50px;
+        padding: 30px 20px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* Note heading */
+    .note-detail-container h1 {
+        color: #007BFF;
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    /* Note content */
+    .note-detail-container p {
+        font-size: 1.1rem;
+        color: #333;
+        line-height: 1.6;
+        margin: 0;
+        word-wrap: break-word;
+    }
+
+    /* Buttons container */
+    .note-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+
+    /* Edit/Delete buttons */
+    .note-buttons a {
+        text-decoration: none;
+        color: white;
+        background-color: #007BFF;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .note-buttons a:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    /* Delete button different color */
+    .note-buttons a.delete {
+        background-color: #ff4d4f;
+    }
+
+    .note-buttons a.delete:hover {
+        background-color: #cc3a3f;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+        .note-detail-container {
+            padding: 20px 15px;
+        }
+
+        .note-detail-container h1 {
+            font-size: 1.8rem;
+        }
+
+        .note-detail-container p {
+            font-size: 1rem;
+        }
+
+        .note-buttons a {
+            font-size: 14px;
+            padding: 8px 16px;
+        }
+    }
+</style>
+
+<div class="note-detail-container">
+    <h1>{{ note.title }}</h1>
+    <p>{{ note.note }}</p>
+    <p><strong>Created on:</strong> {{ note.date_created }}</p>
+
+    <div class="note-buttons">
+        <a href="{% url 'note:edit_note' note.id %}">Edit note</a>
+        <a href="{% url 'note:delete_note' note.id %}" class="delete">Delete note</a>
+    </div>
+</div>
+{% endblock content %}

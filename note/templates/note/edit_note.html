@@ -1,0 +1,110 @@
+
+{% block title %} Edit Note | Notes{% endblock %}
+{% block content %}
+<style>
+    .edit-note-container {
+        max-width: 600px;
+        margin: 100px auto 50px;
+        padding: 30px 25px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    .edit-note-container h2 {
+        text-align: center;
+        color: #007BFF;
+        margin-bottom: 25px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    textarea {
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        font-size: 16px;
+        width: 100%;
+        resize: vertical;
+        min-height: 100px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: #007BFF;
+        box-shadow: 0 0 5px rgba(0,123,255,0.5);
+        outline: none;
+    }
+
+    button[type="submit"] {
+        padding: 12px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .field-errors {
+        color: #ff4d4f;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 480px) {
+        .edit-note-container {
+            padding: 20px 15px;
+        }
+
+        input, textarea, button[type="submit"] {
+            font-size: 14px;
+            padding: 10px;
+        }
+    }
+</style>
+
+<div class="edit-note-container">
+    <h2>Edit Note</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-field">
+            <label for="{{ form.title.id_for_label }}">Title</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+            <div class="field-errors">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-field">
+            <label for="{{ form.note.id_for_label }}">Note</label>
+            {{ form.note }}
+            {% if form.note.errors %}
+            <div class="field-errors">{{ form.note.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit">Confirm changes</button>
+    </form>
+</div>
+{% endblock content %}

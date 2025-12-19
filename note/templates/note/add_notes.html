@@ -1,0 +1,107 @@
+{% extends 'note/base.html' %}
+{% block title %} Add Note | Notes{% endblock %}
+{% block content %}
+<style>
+    .add-note-container {
+        max-width: 600px;
+        margin: 100px auto 50px; /* top margin for navbar */
+        padding: 30px 20px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    .add-note-container h2 {
+        text-align: center;
+        color: #007BFF;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"], textarea {
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        font-size: 16px;
+        resize: vertical;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input[type="text"]:focus, textarea:focus {
+        border-color: #007BFF;
+        box-shadow: 0 0 5px rgba(0,123,255,0.5);
+        outline: none;
+    }
+
+    textarea {
+        min-height: 150px;
+    }
+
+    button[type="submit"] {
+        padding: 12px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    /* Form error styling */
+    .field-errors {
+        color: #ff4d4f;
+        font-size: 0.9rem;
+        margin-top: -10px;
+    }
+
+    @media (max-width: 480px) {
+        .add-note-container {
+            padding: 20px 15px;
+        }
+
+        input[type="text"], textarea, button[type="submit"] {
+            font-size: 14px;
+            padding: 10px;
+        }
+    }
+</style>
+
+<div class="add-note-container">
+    <h2>Add New Note</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <label for="{{ form.title.id_for_label }}">Title</label>
+        {{ form.title }}
+        {% if form.title.errors %}
+        <div class="field-errors">{{ form.title.errors }}</div>
+        {% endif %}
+
+        <label for="{{ form.note.id_for_label }}">Note</label>
+        {{ form.note }}
+        {% if form.note.errors %}
+        <div class="field-errors">{{ form.note.errors }}</div>
+        {% endif %}
+
+        <button type="submit">Add note</button>
+    </form>
+</div>
+{% endblock content %}
